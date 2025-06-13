@@ -7,7 +7,7 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 # Expose the intended port
-EXPOSE 9004
+EXPOSE 80
 
 # Entry point with port and binding options
 ENTRYPOINT ["java", "-jar", "app.jar"]
