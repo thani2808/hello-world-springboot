@@ -5,7 +5,7 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'REPO_NAME', defaultValue: 'dan-p81', description: 'Repository Name to checkout')
+    string(name: 'REPO_NAME', defaultValue: 'hello-world-springboot', description: 'Repository Name to checkout')
     string(name: 'REPO_BRANCH', defaultValue: 'feature', description: 'Branch to checkout')
   }
 
