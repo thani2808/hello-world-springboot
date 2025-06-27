@@ -5,8 +5,9 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'REPO_NAME', defaultValue: 'hello-world-springboot', description: 'Repository Name to checkout')
+    string(name: 'REPO_NAME', defaultValue: 'Dev-role-Springboot-proj', description: 'Repository Name to checkout')
     string(name: 'REPO_BRANCH', defaultValue: 'feature', description: 'Branch to checkout')
+    choice(name: 'ENV_STAGE', choices: ['dev', 'staging', 'prod'], description: 'Deployment Environment')
   }
 
   stages {
@@ -14,6 +15,7 @@ pipeline {
     stage('Startup Debug') {
       steps {
         echo "⚙️ Startup – params.REPO_NAME = '${params.REPO_NAME}'"
+        echo "⚙️ Startup – params.ENV_STAGE = '${params.ENV_STAGE}'"
         echo "⚙️ Startup – env.JOB_NAME     = '${env.JOB_NAME}'"
       }
     }
@@ -77,7 +79,7 @@ pipeline {
 
     stage('Success') {
       steps {
-        echo "🎉 Deployment successful for ${params.REPO_NAME} [${params.REPO_BRANCH}]"
+        echo "🎉 Deployment successful for ${params.REPO_NAME} [${params.REPO_BRANCH}] in ${params.ENV_STAGE}"
       }
     }
   }
