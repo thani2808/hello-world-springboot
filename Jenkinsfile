@@ -1,8 +1,14 @@
-@Library('common-repository-new@feature') _
+@Library('common-10072025@feature') _
 import org.example.*
+
+def app = null  // ✅ Global ApplicationBuilder reference
 
 pipeline {
   agent any
+
+  tools {
+    git 'Git'  // 👈 Jenkins global tool config
+  }
 
   parameters {
     string(name: 'REPO_NAME', defaultValue: 'hello-world-springboot', description: 'Repository Name to checkout')
@@ -23,16 +29,13 @@ pipeline {
     stage('Initialize Environment') {
       steps {
         script {
-          app = new ApplicationBuilder(this)
-          app.initialize()
-        }
-      }
-    }
-
-    stage('Clean Workspace') {
-      steps {
-        script {
-          app.cleanWorkspace()
+          try {
+            app = new ApplicationBuilder(this)
+            app.initialize()  // 🚀 Now includes platform-specific init.sh/init.bat execution
+          } catch (err) {
+            echo "❌ Error during environment initialization: ${err}"
+            throw err
+          }
         }
       }
     }
